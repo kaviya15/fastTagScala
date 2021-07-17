@@ -113,15 +113,3 @@ object fastTag extends App{
 
 
 
-
-
- // var users = HashMap(("vehicleModel","van") ,("name","pooja"),("checkedInTime", "1626535430215"))
-    // registerdUsers+=(("TN73K5869" , users))
-
-
-
-// abstract class abstractFastTag{
-// //   def findVehicle(vehicleNumber:String);
-//   def registerVehicle();
-// //   def billFare();
-// }
