@@ -1,8 +1,10 @@
 import scala.collection.mutable._
 import java.util.Date
 
-
-class fastTag{
+trait fastTagTrait{
+     def billFare(Time:String,vehicleModel:String,registered:Boolean);
+}
+class fastTag extends fastTagTrait{
 
 
     def getDetailsFromUser(vehicleNumber:String):HashMap[String,String]= {
