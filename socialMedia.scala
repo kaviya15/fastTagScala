@@ -2,14 +2,16 @@ import scala.collection.mutable._
 import java.util.Date;
 import scala.util.control.Breaks._
 
-class nodeCreation( var userEmail:String,var userName:String , var listOfFriends:Set[nodeCreation]  = Set(),var listOfPosts:HashMap[Int,Post] = HashMap())
+
+class profileCreation( var userEmail:String,var userName:String , var listOfFriends:Set[profileCreation]  = Set(),var listOfPosts:HashMap[Int,Post] = HashMap())
+ 
 
 class Post(val id:Int , val post:String , val date:Date , val like:Int, val hideFeed:Boolean = false , val disLike:Int)
+   
 
+class connectWorld(var users:HashMap[String, profileCreation] ){
 
-class connectWorld(users:HashMap[String, nodeCreation] ){
-
-    var listOfUsers:HashMap[String, nodeCreation]  = users
+    var listOfUsers:HashMap[String, profileCreation]  = users
 
     var userId:String = null;
     var generateId = 1;
@@ -24,7 +26,7 @@ class connectWorld(users:HashMap[String, nodeCreation] ){
         else{
             println("Enter your name...")
             var name = scala.io.StdIn.readLine();
-            var node = new nodeCreation(email,name);
+            var node = new profileCreation(email,name);
             userId = node.userEmail;
             listOfUsers+= ((userId , node))
             println("Account Registerd Successfully..")
@@ -105,16 +107,17 @@ class connectWorld(users:HashMap[String, nodeCreation] ){
 
 }
 
-object  socialMedia extends App{
 
+object  socialMedia extends App{
 // List of users 
-var listUsers:HashMap[String, nodeCreation]  = HashMap()
+var listUsers:HashMap[String, profileCreation]  = HashMap()
 
 var user :connectWorld = null
 def repeated_process(){
 println("Enter your choice (Choose the index number)")
 println(" 0.Register Account \n 1.Follow user \n 2.postfeeds \n 3.getFeedLikesCount  \n 4.unFollow user \n 5.Get user Feeds \n 6.Get my feeds \n 7.Delete user \n 8.Exit")
 var getOption = scala.io.StdIn.readInt()
+
 getOption match {
     case 0 => {
        user =  new connectWorld(listUsers)
