@@ -11,12 +11,12 @@ class nodeCreation( email:String,name:String){
 }
 
 class Post(Id:Int , feed:String , Date:Date , Like:Int,hideFeed:Boolean = false , dislike:Int){
-    var id = Id;
-    var post = feed;
-    var date = Date;
-    var like = Like;
-    var disLike = dislike;
-    var hide = hideFeed;
+    var id:Int= Id;
+    var post:String = feed;
+    var date:Date = Date;
+    var like:Int= Like;
+    var disLike:Int= dislike;
+    var hide:Boolean = hideFeed;
 }
 
 class connectWorld(users:HashMap[String, nodeCreation] ){
