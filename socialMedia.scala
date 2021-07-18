@@ -4,15 +4,8 @@ import scala.util.control.Breaks._
 
 class nodeCreation( var userEmail:String,var userName:String , var listOfFriends:Set[nodeCreation]  = Set(),var listOfPosts:HashMap[Int,Post] = HashMap())
 
+class Post(var id:Int , var post:String , var date:Date , var like:Int, var hideFeed:Boolean = false , var disLike:Int)
 
-class Post(Id:Int , feed:String , Date:Date , Like:Int,hideFeed:Boolean = false , dislike:Int){
-    var id = Id;
-    var post = feed;
-    var date = Date;
-    var like = Like;
-    var disLike = dislike;
-    var hide = hideFeed;
-}
 
 class connectWorld(users:HashMap[String, nodeCreation] ){
 
@@ -56,7 +49,7 @@ class connectWorld(users:HashMap[String, nodeCreation] ){
         println("Upload your Feed")
         var feed = scala.io.StdIn.readLine();
         var id = generateId
-        var postFeed = new Post(id,feed,new Date(),Like=0,dislike=0)
+        var postFeed = new Post(id = id,post=feed,date = new Date(),like=0,disLike=0)
         listOfUsers.get(userId).get.listOfPosts+=((postFeed.id ,postFeed ))
         println(s"Post successfully saved and yout post ID is ${id}")
         generateId+=1
