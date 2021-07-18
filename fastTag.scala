@@ -1,11 +1,9 @@
 import scala.collection.mutable._
 import java.util.Date
 
+class getFastTag(var registerdUsers:HashMap[String,HashMap[String,String]]){
 
-class fastTag {
-
-
-    def getDetailsFromUser(vehicleNumber:String):HashMap[String,String]= {
+    private def getDetailsFromUser(vehicleNumber:String):HashMap[String,String]= {
         // Map to store key-value pairs
         var userdetails:HashMap[String,String] =  HashMap()
         //Get owner name
@@ -17,18 +15,15 @@ class fastTag {
         // appending data to Map
         userdetails+= (("vehicleModel" ,vehicleModel),("name" ,name),("checkedInTime",new Date().getTime().toString()))
         return(userdetails)
-
   }
 
     // register the vehicle 
-    def registerVehicle(registerdUsers:HashMap[String,HashMap[String,String]],vehicleNumber:String){
-        var data:HashMap[String,String] = getDetailsFromUser(vehicleNumber);
-        registerdUsers+=((vehicleNumber,data))
-        billFare(registerdUsers.get(vehicleNumber).get("checkedInTime"),registerdUsers.get(vehicleNumber).get("vehicleModel"),true)
+    private def registerVehicle(vehicleNumber:String,vehicleDetails:HashMap[String,String]){
+        registerdUsers+=((vehicleNumber,vehicleDetails))
     }
     
     // Get fare for particular Type 
-    def findModel(vehicleModel:String):Int={
+    private def findModel(vehicleModel:String):Int={
         var vehModel = vehicleModel.toLowerCase()
         var carTypes = Array("car","jeep","van")
         var busTypes = Array("bus","truck")
@@ -51,50 +46,52 @@ class fastTag {
     }
 
     // calculate the total bill amount
-     def billFare(Time:String,vehicleModel:String,registered:Boolean){   
-        var bill = findModel(vehicleModel)
-        if(registered){
-            println(s"Total bill = ${bill+50} // current toll fare ${bill} + 50 registration fee")
-        }
-        else{
-             // do some math for time.....
-             lazy val time = new Date().getTime()/60000
-             var timeSeconds= Time.toLong/60000
-             if((timeSeconds-time)<=30){
-              println(s"Total bill = ${bill/2}")
+      def billFare(vehicleNumber:String,registered:Boolean){ 
 
-             }
-             else{
-                 println(s"Total bill = ${bill}")
-             }  
+        if(registered) {
+                  var getVehicleData  = registerdUsers.get(vehicleNumber)
+                  var billAmountForModel:Int = findModel(getVehicleData.get("vehicleModel"))
+                  var timeSeconds = getVehicleData.get("checkedInTime").toLong/60000
+                  lazy val time = new Date().getTime()/60000
+                  if((timeSeconds-time)<=30)
+                        println(s"Total bill = ${billAmountForModel/2}")
+                  else
+                        println(s"Total bill = ${billAmountForModel}")
+                    
+        }
+
+        else{
+             // Get Details from user 
+            var vehicleData:HashMap[String,String] =  getDetailsFromUser(vehicleNumber)
+
+            var billAmountForModel = findModel(vehicleData.get("vehicleModel").get)
+            // println(billAmountForModel)
+
+            println(s"Total bill = ${billAmountForModel+50} // current toll fare ${billAmountForModel} + 50 registration fee")
+            // //register account
+            registerVehicle(vehicleNumber,vehicleData)  
         }
     }
+    
 
-
-
+    
 }
 
 
 
 object fastTag extends App{
 
-            
-    val fastTagUser:fastTag = new fastTag;
-
     var registerdUsers:HashMap[String,HashMap[String,String]] =  HashMap()
-   
-
+    val fastTagUser:getFastTag = new getFastTag(registerdUsers)
+    
     //GET VEHICLE NUMBER FROM USER..
     println("Enter the vehicle Number?..")
-
     val vehicleNumber:String = scala.io.StdIn.readLine().replace(" " ,"").toUpperCase;
 
     //FETCH THE USER DETAILS IF USER EXISTS
     if(registerdUsers.contains(vehicleNumber))
-    {
- 
-        fastTagUser.billFare(registerdUsers.get(vehicleNumber).get("checkedInTime"),  registerdUsers.get(vehicleNumber).get("vehicleModel"),false)
-    }
+        fastTagUser.billFare(vehicleNumber,true)
+    
     else
     {
          val questions =  Array("Vehicle Number you entered doesn't have a fast tag",
@@ -104,12 +101,7 @@ object fastTag extends App{
          val optionSelected:Int =  scala.io.StdIn.readInt();
 
          if(optionSelected==1){
-           fastTagUser.registerVehicle(registerdUsers,vehicleNumber)
+                fastTagUser.billFare(vehicleNumber , false)
          }
     }
 }
-
-
-
-
-
