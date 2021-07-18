@@ -4,7 +4,7 @@ import scala.util.control.Breaks._
 
 class nodeCreation( var userEmail:String,var userName:String , var listOfFriends:Set[nodeCreation]  = Set(),var listOfPosts:HashMap[Int,Post] = HashMap())
 
-class Post(var id:Int , var post:String , var date:Date , var like:Int=0, var hideFeed:Boolean = false , var disLike:Int=0)
+class Post(val id:Int , val post:String , val date:Date , val like:Int, val hideFeed:Boolean = false , val disLike:Int)
 
 
 class connectWorld(users:HashMap[String, nodeCreation] ){
