@@ -3,7 +3,7 @@ import java.util.Date;
 import scala.util.control.Breaks._
 
 class nodeCreation( email:String,name:String){ 
-
+    
     var userName:String = name;
     var userEmail:String = email;
     var listOfFriends:Set[nodeCreation]  = Set();
@@ -11,12 +11,12 @@ class nodeCreation( email:String,name:String){
 }
 
 class Post(Id:Int , feed:String , Date:Date , Like:Int,hideFeed:Boolean = false , dislike:Int){
-    var id:Int= Id;
-    var post:String = feed;
-    var date:Date = Date;
-    var like:Int= Like;
-    var disLike:Int= dislike;
-    var hide:Boolean = hideFeed;
+    var id = Id;
+    var post = feed;
+    var date = Date;
+    var like = Like;
+    var disLike = dislike;
+    var hide = hideFeed;
 }
 
 class connectWorld(users:HashMap[String, nodeCreation] ){
@@ -24,7 +24,7 @@ class connectWorld(users:HashMap[String, nodeCreation] ){
     var listOfUsers:HashMap[String, nodeCreation]  = users
 
     var userId:String = null;
-
+    var generateId = 1;
     // Register the user 
 
     def registerUser(){
@@ -59,14 +59,15 @@ class connectWorld(users:HashMap[String, nodeCreation] ){
 
 
     def postFeed(){
-
-        println("Enter Id for post")
-        var id = scala.io.StdIn.readInt();
+        
         println("Upload your Feed")
         var feed = scala.io.StdIn.readLine();
+        var id = generateId
         var postFeed = new Post(id,feed,new Date(),Like=0,dislike=0)
         listOfUsers.get(userId).get.listOfPosts+=((postFeed.id ,postFeed ))
-        print(listOfUsers.get(userId).get.listOfPosts)
+        println(s"Post successfully saved and yout post ID is ${id}")
+        generateId+=1
+       // print(listOfUsers.get(userId).get.listOfPosts)
 
     }
 
@@ -140,16 +141,39 @@ getOption match {
        user.registerUser()
        repeated_process()
     }
-    case 1 => { user.followUser(); repeated_process()}
-    case 2 => { user.postFeed(); repeated_process()}
-    case 3 => { println(user.getFeedLikesCount()); repeated_process()}
-    case 4 => { user.unFollowUser(); repeated_process()}
-    case 5 => { user.getUserFeeds(); repeated_process()}
-    case 6 => { user.getMyFeeds(); repeated_process()}
-    case 7 => { user.deleteUser(); repeated_process()}
+    case 1 => { 
+
+        user.followUser(); 
+        repeated_process()
+    }
+    case 2 => { 
+        user.postFeed(); 
+        repeated_process()
+    }
+    case 3 => { 
+        println(user.getFeedLikesCount()); 
+        repeated_process()
+    }
+    case 4 => {
+         user.unFollowUser(); 
+         repeated_process()
+        }
+    case 5 => {
+         user.getUserFeeds();
+          repeated_process()
+        }
+    case 6 => {
+         user.getMyFeeds(); 
+         repeated_process()
+        }
+    case 7 => {
+         user.deleteUser(); 
+         repeated_process()
+        }
     case 8=> {println("exited")}
     case _ => { println("select the correct option")   ; repeated_process()}            
 }
 }
 repeated_process()
 }
+
