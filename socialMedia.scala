@@ -45,10 +45,8 @@ class connectWorld(users:HashMap[String, nodeCreation] ){
 
     }
 
-    def followUser(){
-
-        println("Enter the userId needed to be followed...")
-        var friendId = scala.io.StdIn.readLine();
+    def followUser(friendId:String){
+       
         if(listOfUsers.contains(friendId)){
             listOfUsers.get(userId).get.listOfFriends+=(listOfUsers.get(friendId).get)
             println(listOfUsers.get(userId).get.listOfFriends)
@@ -83,9 +81,7 @@ class connectWorld(users:HashMap[String, nodeCreation] ){
             println("No such user Found...")
     }
 
-    def unFollowUser(){
-         println("Enter the userId needed to be Unfollowed...")
-         var friendId = scala.io.StdIn.readLine();
+    def unFollowUser(friendId:String){
         if(listOfUsers.contains(friendId)){
          listOfUsers.get(userId).get.listOfFriends -=  listOfUsers.get(friendId).get
         }
@@ -95,10 +91,8 @@ class connectWorld(users:HashMap[String, nodeCreation] ){
 
     }
 
-    def getFeedLikesCount():Any={
+    def getFeedLikesCount(feedId:Int):Any={
 
-        println("Enter the Feed Id..")
-        var feedId = scala.io.StdIn.readInt()
         if(listOfUsers.get(userId).get.listOfPosts.contains(feedId)){
         return(listOfUsers.get(userId).get.listOfPosts.get(feedId).get.like) 
         }
@@ -111,10 +105,8 @@ class connectWorld(users:HashMap[String, nodeCreation] ){
         println(listOfUsers.get(userId).get.listOfPosts)
     }
     
-    def getUserFeeds(){
-        
-        println("Enter the user Id to get their Feeds...")
-        var usersId = scala.io.StdIn.readLine()
+    def getUserFeeds(usersId:String){
+      
         if(listOfUsers.contains(usersId)){
         println(listOfUsers.get(usersId).get.listOfPosts)  
         }
@@ -142,8 +134,8 @@ getOption match {
        repeated_process()
     }
     case 1 => { 
-
-        user.followUser(); 
+        println("Enter the userId needed to be followed...")
+        user.followUser(scala.io.StdIn.readLine()); 
         repeated_process()
     }
     case 2 => { 
@@ -151,15 +143,19 @@ getOption match {
         repeated_process()
     }
     case 3 => { 
-        println(user.getFeedLikesCount()); 
+        println("Enter the Feed Id..")
+        println(user.getFeedLikesCount(scala.io.StdIn.readInt())); 
         repeated_process()
     }
     case 4 => {
-         user.unFollowUser(); 
+         println("Enter the userId needed to be Unfollowed...")
+         user.unFollowUser( scala.io.StdIn.readLine()); 
          repeated_process()
         }
     case 5 => {
-         user.getUserFeeds();
+          
+          println("Enter the user Id to get their Feeds...")
+          user.getUserFeeds(scala.io.StdIn.readLine());
           repeated_process()
         }
     case 6 => {
@@ -176,4 +172,3 @@ getOption match {
 }
 repeated_process()
 }
-
