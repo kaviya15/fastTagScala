@@ -2,13 +2,8 @@ import scala.collection.mutable._
 import java.util.Date;
 import scala.util.control.Breaks._
 
-class nodeCreation( email:String,name:String){ 
-    
-    var userName:String = name;
-    var userEmail:String = email;
-    var listOfFriends:Set[nodeCreation]  = Set();
-    var listOfPosts:HashMap[Int,Post] = HashMap();
-}
+class nodeCreation( var userEmail:String,var userName:String , var listOfFriends:Set[nodeCreation]  = Set(),var listOfPosts:HashMap[Int,Post] = HashMap())
+
 
 class Post(Id:Int , feed:String , Date:Date , Like:Int,hideFeed:Boolean = false , dislike:Int){
     var id = Id;
