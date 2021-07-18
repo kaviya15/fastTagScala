@@ -24,30 +24,22 @@ class getFastTag(var registerdUsers:HashMap[String,HashMap[String,String]]){
     
     // Get fare for particular Type 
     private def findModel(vehicleModel:String):Int={
-        var vehModel = vehicleModel.toLowerCase()
-        var carTypes = Array("car","jeep","van")
-        var busTypes = Array("bus","truck")
-        var axleTypes = Array("1-axlevehicle","2-axlevehicle","3-axlevehicle")
-        var highAxleTypes = Array("4-axlevehicle","5-axlevehicle","6-axlevehicle","hcm","eme")
-
+         var vehModel = vehicleModel.toLowerCase()
+         var carTypes:Array[String] = Array("car","jeep","van")
+         var busTypes:Array[String] = Array("bus","truck")
+         var axleTypes:Array[String] = Array("1-axlevehicle","2-axlevehicle","3-axlevehicle")
+         var highAxleTypes:Array[String] = Array("4-axlevehicle","5-axlevehicle","6-axlevehicle","hcm","eme")
          if(vehicleModel.toLowerCase() == "lcv") return(135)
-
          else if(carTypes.indexOf(vehModel)>=0)return(85)
-
          else if (busTypes.indexOf(vehModel)>=0) return(285)
-
          else if (axleTypes.indexOf(vehModel)>=0)return(315)
-        
-         else if (highAxleTypes.indexOf(vehModel)>=0)return(450)
-                
+         else if (highAxleTypes.indexOf(vehModel)>=0)return(450)    
          else if (vehModel.split('-')(1) == "axlevehicle")return(550)
-
          else return(0)
     }
 
     // calculate the total bill amount
       def billFare(vehicleNumber:String,registered:Boolean){ 
-
         if(registered) {
                   var getVehicleData  = registerdUsers.get(vehicleNumber)
                   var billAmountForModel:Int = findModel(getVehicleData.get("vehicleModel"))
@@ -57,16 +49,12 @@ class getFastTag(var registerdUsers:HashMap[String,HashMap[String,String]]){
                         println(s"Total bill = ${billAmountForModel/2}")
                   else
                         println(s"Total bill = ${billAmountForModel}")
-                    
-        }
+              } 
 
         else{
              // Get Details from user 
             var vehicleData:HashMap[String,String] =  getDetailsFromUser(vehicleNumber)
-
             var billAmountForModel = findModel(vehicleData.get("vehicleModel").get)
-            // println(billAmountForModel)
-
             println(s"Total bill = ${billAmountForModel+50} // current toll fare ${billAmountForModel} + 50 registration fee")
             // //register account
             registerVehicle(vehicleNumber,vehicleData)  
@@ -76,8 +64,6 @@ class getFastTag(var registerdUsers:HashMap[String,HashMap[String,String]]){
 
     
 }
-
-
 
 object fastTag extends App{
 
@@ -91,17 +77,15 @@ object fastTag extends App{
     //FETCH THE USER DETAILS IF USER EXISTS
     if(registerdUsers.contains(vehicleNumber))
         fastTagUser.billFare(vehicleNumber,true)
-    
     else
     {
          val questions =  Array("Vehicle Number you entered doesn't have a fast tag",
         "Choose 1 to Register for fastTag","Choose 2 to exit","Enter your option: ")
          questions.foreach(arr=>println(arr))
-
+        
          val optionSelected:Int =  scala.io.StdIn.readInt();
-
-         if(optionSelected==1){
+         if(optionSelected==1)
                 fastTagUser.billFare(vehicleNumber , false)
-         }
+         
     }
 }
