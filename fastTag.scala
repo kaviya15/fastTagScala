@@ -53,7 +53,7 @@ class fastTag extends fastTagTrait{
     }
 
     // calculate the total bill amount
-    def billFare(Time:String,vehicleModel:String,registered:Boolean){   
+    override def billFare(Time:String,vehicleModel:String,registered:Boolean){   
         var bill = findModel(vehicleModel)
         if(registered){
             println(s"Total bill = ${bill+50} // current toll fare ${bill} + 50 registration fee")
