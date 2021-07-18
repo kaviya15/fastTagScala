@@ -114,7 +114,7 @@ var listUsers:HashMap[String, profileCreation]  = HashMap()
 
 var user :connectWorld = null
  
-def repeated_process={
+def repeated_process(){
 println("Enter your choice (Choose the index number)")
 println(" 0.Register Account \n 1.Follow user \n 2.postfeeds \n 3.getFeedLikesCount  \n 4.unFollow user \n 5.Get user Feeds \n 6.Get my feeds \n 7.Delete user \n 8.Exit")
 var getOption = scala.io.StdIn.readInt()
@@ -123,47 +123,47 @@ getOption match {
     case 0 => {
        user =  new connectWorld(listUsers)
        user.registerUser;
-       repeated_process;
+       repeated_process();
     }
     case 1 => { 
         println("Enter the userId needed to be followed...")
         user.followUser(scala.io.StdIn.readLine()); 
-        repeated_process;
+       repeated_process();
     }
     case 2 => { 
         user.postFeed; 
-        repeated_process;
+        repeated_process();
     }
     case 3 => { 
         println("Enter the Feed Id..")
         println(user.getFeedLikesCount(scala.io.StdIn.readInt())); 
-        repeated_process;
+        repeated_process();
     }
     case 4 => {
          println("Enter the userId needed to be Unfollowed...")
          user.unFollowUser( scala.io.StdIn.readLine()); 
-         repeated_process;
+         repeated_process();
         }
     case 5 => {
           
           println("Enter the user Id to get their Feeds...")
           user.getUserFeeds(scala.io.StdIn.readLine());
-          repeated_process;
+         repeated_process();
         }
     case 6 => {
          user.getMyFeeds; 
-         repeated_process;
+         repeated_process();
         }
     case 7 => {
          user.deleteUser; 
-         repeated_process;
+         repeated_process();
         }
     case 8=> {println("exited")}
     case _ => { 
                println("select the correct option");
-               repeated_process
+               repeated_process();
     }            
 }
 }
-repeated_process;
+repeated_process();
 }
