@@ -1,10 +1,8 @@
 import scala.collection.mutable._
 import java.util.Date
 
-trait fastTagTrait{
-     def billFare(Time:String,vehicleModel:String,registered:Boolean);
-}
-class fastTag extends fastTagTrait{
+
+class fastTag {
 
 
     def getDetailsFromUser(vehicleNumber:String):HashMap[String,String]= {
@@ -53,7 +51,7 @@ class fastTag extends fastTagTrait{
     }
 
     // calculate the total bill amount
-    override def billFare(Time:String,vehicleModel:String,registered:Boolean){   
+     def billFare(Time:String,vehicleModel:String,registered:Boolean){   
         var bill = findModel(vehicleModel)
         if(registered){
             println(s"Total bill = ${bill+50} // current toll fare ${bill} + 50 registration fee")
