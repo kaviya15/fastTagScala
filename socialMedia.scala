@@ -3,13 +3,13 @@ import java.util.Date;
 import scala.util.control.Breaks._
 
 
-class profileCreation( var userEmail:String,var userName:String , var listOfFriends:Set[profileCreation]  = Set(),var listOfPosts:HashMap[Int,Post] = HashMap())
+case class profileCreation(userEmail:String, userName:String ,  listOfFriends:Set[profileCreation]  = Set(), listOfPosts:HashMap[Int,Post] = HashMap())
  
 
-class Post(val id:Int , val post:String , val date:Date , val like:Int, val hideFeed:Boolean = false , val disLike:Int)
+case class Post( id:Int ,  post:String ,  date:Date ,  like:Int,  hideFeed:Boolean = false ,  disLike:Int)
    
 
-class connectWorld(var users:HashMap[String, profileCreation] ){
+case class connectWorld(users:HashMap[String, profileCreation] ){
 
     var listOfUsers:HashMap[String, profileCreation]  = users
 
@@ -26,7 +26,7 @@ class connectWorld(var users:HashMap[String, profileCreation] ){
         else{
             println("Enter your name...")
             var name = scala.io.StdIn.readLine();
-            var node = new profileCreation(email,name);
+            var node = profileCreation(email,name);
             userId = node.userEmail;
             listOfUsers+= ((userId , node))
             println("Account Registerd Successfully..")
@@ -51,7 +51,7 @@ class connectWorld(var users:HashMap[String, profileCreation] ){
         println("Upload your Feed")
         var feed = scala.io.StdIn.readLine();
         var id = generateId
-        var postFeed = new Post(id = id,post=feed,date = new Date(),like=0,disLike=0)
+        var postFeed =  Post(id = id,post=feed,date = new Date(),like=0,disLike=0)
         listOfUsers.get(userId).get.listOfPosts+=((postFeed.id ,postFeed ))
         println(s"Post successfully saved and yout post ID is ${id}")
         generateId+=1
@@ -112,7 +112,7 @@ object  socialMedia extends App{
 // List of users 
 var listUsers:HashMap[String, profileCreation]  = HashMap()
 
-var user :connectWorld = null
+var user:connectWorld = null
  
 def repeated_process(){
 println("Enter your choice (Choose the index number)")
@@ -121,7 +121,7 @@ var getOption = scala.io.StdIn.readInt()
 
 getOption match {
     case 0 => {
-       user =  new connectWorld(listUsers)
+       user =  connectWorld(listUsers)
        user.registerUser;
        repeated_process();
     }
