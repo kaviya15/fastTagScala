@@ -18,9 +18,11 @@ class getFastTag(var registerdUsers:HashMap[String,HashMap[String,String]]){
   }
    private def listModel:String={
        var models = Array("car/jeep/van","bus/truck","1-3axlevehicle","4-6axlevehicle","HCM/EME ","7-moreaxlevehicle")
-       for(model <- 0  until models.length){
-           println(s"${model}. ${models(model)}")
-       }
+       models.zipWithIndex.foreach{ case(ind , element) =>  println(s"${ind}. ${element}") }
+
+//        for(model <- 0  until models.length){
+//            println(s"${model}. ${models(model)}")
+//        }
       var vehicleModel = scala.io.StdIn.readInt()
       return(models(vehicleModel))
    }
